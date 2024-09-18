@@ -9,7 +9,7 @@ public class LearningJournalApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LearningJournalApplication.class, args);
 
-		System.out.println("Hallo");
+		System.out.println("Hadllo");
 
 
 	}
