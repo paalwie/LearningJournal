@@ -3,17 +3,17 @@ package com.Test.Tester1;
 import com.Test.Tester1.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
+
 
     private final CustomUserDetailsService userDetailsService;
 
@@ -22,43 +22,44 @@ public class SecurityConfig {
     }
 
     @Bean
+    public UserDetailsService userDetailsService() {
+        return userDetailsService;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/start", "/").permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Admin-Routen
+                        .requestMatchers("/user/**").hasRole("USER")  // User-Routen
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(customAuthenticationSuccessHandler())  // Custom Success Handler für Weiterleitung
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/start")
                         .permitAll()
-                );
+
+                )  .userDetailsService(userDetailsService); // Hier den benutzerdefinierten UserDetailsService setzen;
+
+        System.out.println("das ist ein test ;) ");
 
         return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Verwende NoOpPasswordEncoder für Klartext-Passwörter (nur für Tests!)
-        return NoOpPasswordEncoder.getInstance();
+        return NoOpPasswordEncoder.getInstance(); // Keine Verschlüsselung, nur für Tests
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return userDetailsService;
+    public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 }

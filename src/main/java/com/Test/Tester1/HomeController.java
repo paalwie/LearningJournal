@@ -7,27 +7,28 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class HomeController {
 
-    // Weiterleitung von "/" auf "/start"
-    @GetMapping("/")
-    public RedirectView redirectToStartPage() {
-        return new RedirectView("/start");
+
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard() {
+        System.out.println("hallo1");
+        return "adminDashboard";  // adminDashboard.html
     }
 
-    // Öffentliche Startseite
+    @GetMapping("/user/home")
+    public String userHome() {
+        System.out.println("hallo2");
+        return "userHome";  // userHome.html
+    }
+
     @GetMapping("/start")
     public String startPage() {
-        return "start";  // Gibt die start.html-Seite zurück
+        System.out.println("hallo3");
+        return "start";  // start.html
     }
 
-    // Benutzerdefinierte Login-Seite
     @GetMapping("/login")
     public String loginPage() {
-        return "login";  // Gibt die login.html-Seite zurück
-    }
-
-    // Geschützte Hauptseite nach erfolgreicher Anmeldung
-    @GetMapping("/home")
-    public String homePage() {
-        return "home";  // Geschützte Seite für angemeldete Benutzer
+        System.out.println("hallo4");
+        return "login";  // login.html
     }
 }

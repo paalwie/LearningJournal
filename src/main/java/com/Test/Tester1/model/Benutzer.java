@@ -16,6 +16,9 @@ public class Benutzer {
     @Column(nullable = false)
     private String passwort;
 
+    @Column(nullable = false)
+    private int rolleid;
+
     // Weitere Felder, falls benötigt
 
     // Getter und Setter
@@ -41,5 +44,13 @@ public class Benutzer {
 
     public void setPasswort(String passwort) {
         this.passwort = passwort;
+    }
+
+    public int getRolleid() {
+        return rolleid;
+    }
+
+    public void setRolleid(int rolleid) {
+        this.rolleid = rolleid;
     }
 }
