@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Admin-Dashboard</title>
+  <style>
+    /* ... dein bestehendes CSS */
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .left-column {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right-column {
+        color: white;
+        background-color: black;
+        flex: 5;
+        padding: 20px;
+        height: 85vh; /* Nimmt 80% der Viewport-Höhe ein */
+    }
+  </style>
+</head>
+<body>
+<div class="sidebar">
+</div>
+
+<div class="content">
+  <div class="left-column">
+    <h1><p><a th:href="@{/admin/admin2}">Admin-Seite 2</a></h1></p>
+    <h1><p><a th:href="@{/user/home}">User-Seite 1</a></h1></p>
+    <h1><p><a th:href="@{/user/user2}">User-Seite 2</a></h1></p>
+    <img th:src="@{/images/logo.png}" alt="Mein Bild">
+  </div>
+  <div class="right-column" >
+    <h2>Willkommen auf deinem Dashboard!</h2>
+    <h1>Du intelligenter Admin!</h1>
+    <p>Hier kannst du später deine Inhalte hinzufügen.</p>
+    <p>Zurück zur Seite 1: <a th:href="@{/admin/dashboard}">Back</a></p>
+  </div>
+</div>
+</body>
+</html>

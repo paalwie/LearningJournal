@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Startseite</title>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen bei der Mischok Academy</title>
+    <style>
+        body {
+            background-image: url('/images/hintergrund.jpg'); /* Ersetze durch deinen Bildpfad */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 30px;
+        }
+    </style>
 </head>
 <body>
-<h1>Willkommen auf der Startseite!</h1>
-<p>Bitte <a th:href="@{/login}">melden Sie sich an</a>, um auf geschützte Inhalte zuzugreifen.</p>
+<div class="container">
+    <h1>Willkommen beim Learning-Journal der</h1>
+    <h1>Mischok Academy</h1>
+    <h2><a th:href="@{/login}">Hier geht es zum Login</a></h2>
+    <p><img th:src="@{/images/logo.png}" alt="Mein Bild"></p>
+
+</div>
 </body>
 </html>

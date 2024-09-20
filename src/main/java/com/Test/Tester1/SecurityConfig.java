@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +31,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/static/**").permitAll()
                         .requestMatchers("/start", "/").permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Admin-Routen
                         .requestMatchers("/user/**").hasRole("USER")  // User-Routen
+                        .requestMatchers("/access-denied").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -61,5 +64,13 @@ public class SecurityConfig {
     @Bean
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler()
+    {
+        return (request, response, accessDeniedException) -> {
+            response.sendRedirect("/access-denied");
+        };
     }
 }
