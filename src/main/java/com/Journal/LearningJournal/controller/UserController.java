@@ -52,6 +52,14 @@ public class UserController {
           return "user";
     }
 
+    @GetMapping("/profile")
+    public String profilePage(Model model, Principal principal) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(principal.getName());
+        model.addAttribute("user", userDetails);
+        return "profile"; // Der Name der HTML-Datei ohne die .html-Erweiterung
+    }
+
+
     @GetMapping("admin-page")
     public String AdminPage (Model model, Principal principal) {
         return "admin";
