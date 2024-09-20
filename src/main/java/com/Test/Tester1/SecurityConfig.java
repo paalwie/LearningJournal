@@ -32,6 +32,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/static/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/start", "/").permitAll()
                         .requestMatchers("/login", "/logout").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Admin-Routen
@@ -48,6 +49,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/start")
                         .permitAll()
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
 
                 )  .userDetailsService(userDetailsService); // Hier den benutzerdefinierten UserDetailsService setzen;
 

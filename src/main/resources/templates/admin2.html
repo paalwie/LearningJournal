@@ -34,6 +34,9 @@
     <h1><p><a th:href="@{/admin/admin2}">Admin-Seite 2</a></h1></p>
     <h1><p><a th:href="@{/user/home}">User-Seite 1</a></h1></p>
     <h1><p><a th:href="@{/user/user2}">User-Seite 2</a></h1></p>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Logout">
+    </form>
     <img th:src="@{/images/logo.png}" alt="Mein Bild">
   </div>
   <div class="right-column" >

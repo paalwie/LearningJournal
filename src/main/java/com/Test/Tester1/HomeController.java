@@ -14,11 +14,13 @@ public class HomeController {
         return "adminDashboard";  // adminDashboard.html
     }
 
+    /*
     @GetMapping("/user/home")
     public String userHome() {
         System.out.println("hallo2");
         return "userHome";  // userHome.html
     }
+    */
 
     @GetMapping("/start")
     public String startPage() {

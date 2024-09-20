@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Meine Journaleinträge</title>
+  <style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+<h1>Meine Journaleinträge</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Eintrag ID</th>
+    <th>Titel</th>
+    <th>Inhalt</th>
+    <th>Erstellungsdatum</th>
+    <th>Erstellungszeit</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="entry : ${entries}">
+    <td th:text="${entry.eintragid}"></td>
+    <td th:text="${entry.titel}"></td>
+    <td th:text="${entry.inhalt}"></td>
+    <td th:text="${entry.erstellungsdatum}"></td>
+    <td th:text="${entry.erstellungszeit}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
