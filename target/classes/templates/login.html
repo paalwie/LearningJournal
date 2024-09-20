@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+
+<style>
+
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+h2 {
+    text-align: center;
+    color: #0e2433;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #0e2433;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #45b6fe;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #45b6fe;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0e2433;
+}
+
+/* Message div styling */
+#message {
+    margin-bottom: 15px;
+    padding: 10px;
+    display: none; /* Hidden by default */
+    background-color: #45b6fe;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 500px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+
+</style>
+
+<body>
+<div class="container">
+    <h2>Register</h2>
+    <div class="message" th:if="${param.error}">
+        Invalid Username or Password
+    </div>
+    <div class="message" th:if="${param.logout}">
+        Logout Succesfully
+    </div>
+
+    <h2>Admin and User Page</h2>
+    <form
+            th:action="@{/login}"
+            method="post"
+            th:object="${users}">
+
+
+       <label for="username">Email</label>
+        <input  type="email" id="username" name="username" placeholder="Enter your Username" required>
+
+        <label for="password">Password</label>
+        <input  type="password" id="password" name="password" placeholder="Password" required>
+
+        <input type="submit" value="Register">
+    </form>
+
+</div>
+</body>
+</html>
