@@ -2,9 +2,29 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Meine Journaleinträge</title>
+  <title>Admin-Dashboard</title>
   <style>
-    table {
+    /* ... dein bestehendes CSS */
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .left-column {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right-column {
+        color: white;
+        background-color: black;
+        flex: 5;
+        padding: 20px;
+        height: 85vh; /* Nimmt 85% der Viewport-Höhe ein */
+    }
+
+     table {
         width: 100%;
         border-collapse: collapse;
     }
@@ -17,26 +37,44 @@
   </style>
 </head>
 <body>
-<h1>Meine Journaleinträge</h1>
-<table>
-  <thead>
-  <tr>
-    <th>Eintrag ID</th>
-    <th>Titel</th>
-    <th>Inhalt</th>
-    <th>Erstellungsdatum</th>
-    <th>Erstellungszeit</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="entry : ${entries}">
-    <td th:text="${entry.eintragid}"></td>
-    <td th:text="${entry.titel}"></td>
-    <td th:text="${entry.inhalt}"></td>
-    <td th:text="${entry.erstellungsdatum}"></td>
-    <td th:text="${entry.erstellungszeit}"></td>
-  </tr>
-  </tbody>
-</table>
+<div class="sidebar">
+</div>
+
+<div class="content">
+  <div class="left-column">
+    <h1><a th:href="@{/user/user2}">User-Seite 2</a></h1>
+    <h1><a th:href="@{/user/journal}">Journal-Einträge</a></h1>
+    <h1><a th:href="@{/admin/dashboard}">Admin-Seite 1</a></h1>
+    <h1><a th:href="@{/admin/admin2}">Admin-Seite 2</a></h1>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Logout">
+    </form>
+    <img th:src="@{/images/logo.png}" alt="Mein Bild">
+  </div>
+  <div class="right-column">
+    <h1>Meine Journaleinträge</h1>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Eintrag ID</th>
+        <th>Titel</th>
+        <th>Inhalt</th>
+        <th>Erstellungsdatum</th>
+        <th>Erstellungszeit</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="entry : ${entries}">
+        <td th:text="${entry.eintragid}"></td>
+        <td th:text="${entry.titel}"></td>
+        <td th:text="${entry.inhalt}"></td>
+        <td th:text="${entry.erstellungsdatum}"></td>
+        <td th:text="${entry.erstellungszeit}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>
