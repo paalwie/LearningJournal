@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Admin-Dashboard</title>
+  <style>
+    /* ... dein bestehendes CSS */
+
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .left-column {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .right-column {
+        color: white;
+        background-color: black;
+        flex: 5;
+        padding: 20px;
+        height: 85vh; /* Nimmt 85% der Viewport-Höhe ein */
+    }
+  </style>
+</head>
+<body>
+<div class="sidebar">
+</div>
+
+<div class="content">
+  <div class="left-column">
+    <h1><a th:href="@{/user/home}">User-Dashboard</a></h1>
+    <h1><a th:href="@{/user/journal}">Journal-Einträge</a></h1>
+    <hr>
+    <form th:action="@{/logout}" method="post">
+      <input type="submit" value="Logout">
+    </form>
+    <img th:src="@{/images/logo.png}" alt="Mein Bild">
+  </div>
+  <div class="right-column">
+    <h1>Journaleintrag bearbeiten</h1>
+    <form th:action="@{/user/journal/update/{id}(id=${journal.eintragid})}" method="post">
+      <div>
+        <label for="titel">Titel:</label>
+        <input type="text" id="titel" name="titel" th:value="${journal.titel}" required>
+      </div>
+      <div>
+        <label for="inhalt">Inhalt:</label>
+        <textarea id="inhalt" name="inhalt" required th:text="${journal.inhalt}"></textarea>
+      </div>
+      <button type="submit">Update Eintrag</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

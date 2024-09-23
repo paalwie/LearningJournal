@@ -10,34 +10,30 @@ public class Journal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eintragid; // Primärschlüssel
+    private Long eintragid;
 
-    private Long benutzerid; // ID des Benutzers, der den Eintrag erstellt hat
+    @Column(nullable = false)
+    private String titel;
 
-    private String titel; // Titel des Journaleintrags
+    @Column(nullable = false)
+    private String inhalt;
 
-    private String inhalt; // Inhalt des Journaleintrags
+    @Column(nullable = false)
+    private Long benutzerid;
 
-    private LocalDate erstellungsdatum; // Erstellungsdatum
+    @Column(nullable = false)
+    private LocalDate erstellungsdatum;
 
-    private LocalTime erstellungszeit; // Erstellungszeit
+    @Column(nullable = false)
+    private LocalTime erstellungszeit;
 
     // Getter und Setter
-
     public Long getEintragid() {
         return eintragid;
     }
 
     public void setEintragid(Long eintragid) {
         this.eintragid = eintragid;
-    }
-
-    public Long getBenutzerid() {
-        return benutzerid;
-    }
-
-    public void setBenutzerid(Long benutzerid) {
-        this.benutzerid = benutzerid;
     }
 
     public String getTitel() {
@@ -54,6 +50,14 @@ public class Journal {
 
     public void setInhalt(String inhalt) {
         this.inhalt = inhalt;
+    }
+
+    public Long getBenutzerid() {
+        return benutzerid;
+    }
+
+    public void setBenutzerid(Long benutzerid) {
+        this.benutzerid = benutzerid;
     }
 
     public LocalDate getErstellungsdatum() {

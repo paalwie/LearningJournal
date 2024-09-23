@@ -42,10 +42,9 @@
 
 <div class="content">
   <div class="left-column">
-    <h1><a th:href="@{/user/user2}">User-Seite 2</a></h1>
+    <h1><a th:href="@{/user/home}">User-Dashboard</a></h1>
     <h1><a th:href="@{/user/journal}">Journal-Einträge</a></h1>
-    <h1><a th:href="@{/admin/dashboard}">Admin-Seite 1</a></h1>
-    <h1><a th:href="@{/admin/admin2}">Admin-Seite 2</a></h1>
+    <hr>
     <form th:action="@{/logout}" method="post">
       <input type="submit" value="Logout">
     </form>
@@ -54,26 +53,56 @@
   <div class="right-column">
     <h1>Meine Journaleinträge</h1>
 
+    <!-- Button zum Hinzufügen eines neuen Eintrags -->
+    <a href="/user/journal/create">
+      <button>Neuen Eintrag hinzufügen</button>
+    </a>
+
     <table>
       <thead>
       <tr>
         <th>Eintrag ID</th>
         <th>Titel</th>
-        <th>Inhalt</th>
         <th>Erstellungsdatum</th>
         <th>Erstellungszeit</th>
+        <th>Eintrag lesen</th>
+        <th>Eintrag löschen</th>
+        <th>Eintrag bearbeiten</th>  <!-- Neue Spalte für den Link -->
       </tr>
       </thead>
       <tbody>
       <tr th:each="entry : ${entries}">
         <td th:text="${entry.eintragid}"></td>
         <td th:text="${entry.titel}"></td>
-        <td th:text="${entry.inhalt}"></td>
         <td th:text="${entry.erstellungsdatum}"></td>
         <td th:text="${entry.erstellungszeit}"></td>
+
+        <!-- Link zum Lesen des Eintrags -->
+        <td>
+          <a class="btn btn-info" th:href="@{/user/journal/{id}(id=${entry.eintragid})}">Eintrag lesen</a>
+        </td>
+
+        <!-- Eintrag löschen Button -->
+        <td>
+          <form th:action="@{/user/journal/delete/{id}(id=${entry.eintragid})}" method="post" style="display:inline;">
+            <button class="btn btn-danger" type="submit">Eintrag löschen</button>
+          </form>
+        </td>
+
+        <!-- Eintrag bearbeiten Button -->
+        <td>
+          <a class="btn btn-warning" th:href="@{/user/journal/edit/{id}(id=${entry.eintragid})}">Eintrag bearbeiten</a>
+        </td>
       </tr>
       </tbody>
     </table>
+    <div class="right-column">
+      <div th:if="${entries.totalPages > 1}">
+        <a th:if="${currentPage > 0}" th:href="@{/user/journal(page=${currentPage - 1}, size=${size})}">Vorherige Seite</a>
+        <span th:text="' Seite ' + ${currentPage + 1} + ' von ' + ${entries.totalPages}"></span>
+        <a th:if="${currentPage + 1 < entries.totalPages}" th:href="@{/user/journal(page=${currentPage + 1}, size=${size})}">Nächste Seite</a>
+      </div>
+    </div>
   </div>
 </div>
 </body>

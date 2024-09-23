@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Admin-Dashboard</title>
+    <style>
+        /* ... dein bestehendes CSS */
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .left-column {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .right-column {
+            color: white;
+            background-color: black;
+            flex: 5;
+            padding: 20px;
+            height: 85vh; /* Nimmt 85% der Viewport-Höhe ein */
+        }
+    </style>
+</head>
+<body>
+<div class="sidebar">
+</div>
+
+<div class="content">
+    <div class="left-column">
+        <h1><a th:href="@{/user/home}">User-Dashboard</a></h1>
+        <h1><a th:href="@{/user/journal}">Journal-Einträge</a></h1>
+        <hr>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout">
+        </form>
+        <img th:src="@{/images/logo.png}" alt="Mein Bild">
+    </div>
+    <div class="right-column">
+        <h1>Neuen Journaleintrag erstellen</h1>
+
+        <form action="/user/journal/create" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <label for="titel">Titel:</label>
+            <input type="text" id="titel" name="titel" required><br><br>
+
+            <label for="inhalt">Inhalt:</label><br>
+            <textarea id="inhalt" name="inhalt" rows="4" cols="50" required></textarea><br><br>
+
+            <button type="submit">Eintrag erstellen</button>
+        </form>
+
+        <!-- Link zurück zu den Einträgen -->
+        <a href="/user/journal">Zurück zu meinen Einträgen</a>
+
+
+    </div>
+</div>
+</body>
+</html>
