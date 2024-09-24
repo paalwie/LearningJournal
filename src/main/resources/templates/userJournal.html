@@ -115,7 +115,7 @@
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        width: 100%; /* Full width for the content area */
+        width: 97.5%; /* Full width for the content area */
     }
 
     .content h1 {
@@ -211,15 +211,15 @@
 
 <body>
 <div class="sidebar">
-  <div>
-    <h3>Menü</h3>
-    <a href="/user/home">Dashboard</a>
-    <a href="/user/journal">Journal-Einträge</a>
-  </div>
-
+  <h3>Menü</h3>
+  <a th:href="@{/user/home}">Dashboard</a>
+  <a th:href="@{/user/journal}">Journal</a>
+  <a th:href="@{/user/account}">Konto Verwalten</a>
   <div class="logo">
-    <img th:src="@{/images/logo.png}" alt="Logo">
+    <img alt="Logo" th:src="@{/images/logo2.png}">
   </div>
+</div>
+
 
   <div class="logout">
     <form th:action="@{/logout}" method="post">
