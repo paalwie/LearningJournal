@@ -1,58 +1,231 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <title>Admin-Dashboard</title>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Elegantes Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
   <style>
-    /* ... dein bestehendes CSS */
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #eaeaea;
+    }
 
-    .content {
+    /* Linke Navigationsleiste */
+    .sidebar {
+        height: 100vh;
+        width: 200px;
+        background: linear-gradient(180deg, #444, #555);
+        padding-top: 40px;
+        position: fixed;
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     }
 
-    .left-column {
-        flex: 1;
+    .sidebar a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        color: #fff;
+        display: block;
+        transition: background-color 0.3s, padding-left 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #666;
+        padding-left: 25px;
+    }
+
+    .sidebar h3 {
+        padding-left: 20px;
+        color: #fff;
+        margin-bottom: 30px;
+        font-size: 20px;
+    }
+
+    .sidebar form {
+                padding-left: 20px;
+        color: #fff;
+        margin-bottom: 30px;
+        font-size: 20px;
+    }
+
+    /* Logo */
+    .sidebar .logo {
+        margin-top: auto; /* Pushes the logo to the bottom */
         padding: 20px;
+        text-align: center;
     }
 
-    .right-column {
+    .sidebar .logo img {
+        width: 80%; /* Adjust the size of the logo */
+    }
+
+    /* Hauptinhalt */
+    .main-content {
+        margin-left: 200px;
+        padding: 20px;
+        width: calc(100% - 250px);
+        background-color: #fff;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header */
+    .header {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h2 {
+        font-size: 22px;
+        color: #333;
+    }
+
+    .header .user-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .header .user-info img {
+        border-radius: 50%;
+        width: 30px; /* Größe des Avatar-Bilds verringert */
+        height: 30px; /* Größe des Avatar-Bilds verringert */
+    }
+
+    .header .user-info span {
+        font-size: 18px;
+        margin-left: 15px;
+        color: #333;
+    }
+
+    /* Inhalt */
+    .content {
+        height: 70vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 0;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .content h1 {
+        font-size: 24px;
+        color: #444;
+        flex-grow: 1;
+        margin: 0;
+    }
+
+    /* Rechte Seitenleiste mit Buttons */
+    .right-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .right-section button {
+        padding: 15px 25px;
+        font-size: 16px;
+        border: none;
+        background: linear-gradient(45deg, #ff8a00, #e52e71);
         color: white;
-        background-color: black;
-        flex: 5;
-        padding: 20px;
-        height: 85vh; /* Nimmt 85% der Viewport-Höhe ein */
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .right-section button:hover {
+        background: linear-gradient(45deg, #e52e71, #ff8a00);
+        transform: translateY(-2px);
+    }
+
+    .avatar > img {
+        width: 3rem;
+        height: 3rem;
+    }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .titelEdit {
+    width: 16rem;
+    height: auto;
     }
   </style>
 </head>
 <body>
-<div class="sidebar">
-</div>
-
-<div class="content">
-  <div class="left-column">
-    <h1><a th:href="@{/user/home}">User-Dashboard</a></h1>
-    <h1><a th:href="@{/user/journal}">Journal-Einträge</a></h1>
-    <hr>
+<div id="app">
+  <!-- Linke Navigationsleiste -->
+  <div class="sidebar">
+    <h3>Menü</h3>
+    <a th:href="@{/user/home}">Dashboard</a>
+    <a th:href="@{/user/journal}">Journal</a>
+    <a th:href="@{/user/userConfig}">Konto Verwalten</a>
     <form th:action="@{/logout}" method="post">
       <input type="submit" value="Logout">
     </form>
-    <img th:src="@{/images/logo.png}" alt="Mein Bild">
+    <div class="logo">
+      <img alt="Logo" th:src="@{/images/logo2.png}">
+    </div>
   </div>
-  <div class="right-column">
-    <h1>Journaleintrag bearbeiten</h1>
-    <form th:action="@{/user/journal/update/{id}(id=${journal.eintragid})}" method="post">
-      <div>
-        <label for="titel">Titel:</label>
-        <input type="text" id="titel" name="titel" th:value="${journal.titel}" required>
+
+  <!-- Hauptinhalt -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <div class="avatar">
+        <img alt="Logo" th:src="@{/images/Avatar.png}">
       </div>
-      <div>
-        <label for="inhalt">Inhalt:</label>
-        <textarea id="inhalt" name="inhalt" required th:text="${journal.inhalt}"></textarea>
-      </div>
-      <button type="submit">Update Eintrag</button>
-    </form>
+      <h1>Hallo, <span th:text="${benutzername}">User</span>!</h1>
+    </div>
+
+    <!-- Inhalt -->
+    <div class="right-column">
+      <h1>Journaleintrag bearbeiten</h1>
+      <form th:action="@{/user/journal/update/{id}(id=${journal.eintragid})}" method="post">
+        <div>
+          <label for="titel">Titel:</label>
+          <input class="titelEdit" type="text" id="titel" name="titel" th:value="${journal.titel}" required>
+        </div>
+        <div>
+          <label for="inhalt">Inhalt:</label>
+          <textarea id="inhalt" name="inhalt" required th:text="${journal.inhalt}"></textarea>
+        </div>
+        <button type="submit">Update Eintrag</button>
+      </form>
+    </div>
   </div>
 </div>
+<script>
+  new Vue({
+      el: '#app',
+      data: {
+          // Vue-Daten
+      }
+  });
+</script>
 </body>
 </html>
+
+
