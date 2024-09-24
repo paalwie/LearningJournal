@@ -163,6 +163,16 @@
             width: 3rem;
             height: 3rem;
         }
+
+         table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -185,22 +195,51 @@
             <div class="avatar">
                 <img alt="Logo" th:src="@{/images/Avatar.png}">
             </div>
-            <h1>Hallo, <span th:text="${benutzername}">Admin</span>!</h1>
+            <h1>Hallo, <span th:text="${benutzername}">User</span>!</h1>
 
             <!-- "Learning Journal" in der Mitte -->
-            <div class="center-title">
-                Learning Journal
-            </div>
-
-            <!-- Logout Button -->
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="logout">Logout</button>
-            </form>
         </div>
-
+        <a th:href="@{/admin/usercreate}">
+            <button>Benutzer hinzufügen</button>
+        </a>
         <!-- Inhalt -->
         <div class="content">
-            <h1>Monatliche Themen Auswahl</h1>
+
+            <h1>User-Verwaltung</h1>
+            <table>
+                <thead>
+                <tr>
+                    <!-- Sortierbare Spalten -->
+                    <th><a th:href="@{/admin/usermanagement(sortBy='benutzerid')}">Benutzer ID</a></th>
+                    <th><a th:href="@{/admin/usermanagement(sortBy='benutzername')}">Benutzername</a></th>
+                    <th><a th:href="@{/admin/usermanagement(sortBy='rolleid')}">Rollen ID</a></th>
+                    <th><a th:href="@{/admin/usermanagement(sortBy='klassenid')}">Klassen ID</a></th>
+                    <!-- Weitere Spalten nach Bedarf -->
+                    <th>Passwort</th>
+                    <th>Bearbeiten</th>
+                    <th>Löschen</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.benutzerid}"></td>
+                    <td th:text="${user.benutzername}"></td>
+                    <td th:text="${user.rolleid}"></td>
+                    <td th:text="${user.klassenid}"></td>
+                    <td th:text="${user.passwort}"></td>
+                    <td>
+                        <form th:action="@{/admin/useredit/{id}(id=${user.benutzerid})}" method="get">
+                            <button type="submit" class="btn btn-warning">Bearbeiten</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/admin/userdelete/{id}(id=${user.benutzerid})}" method="post">
+                            <button type="submit" class="btn btn-danger">Löschen</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

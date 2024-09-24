@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 public class Benutzer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long benutzerid;
 
     @Column(nullable = false, unique = true)
@@ -18,6 +17,9 @@ public class Benutzer {
 
     @Column(nullable = false)
     private int rolleid;
+
+    @Column(nullable = false)
+    private int klassenid;
 
     // Weitere Felder, falls benötigt
 
@@ -52,5 +54,13 @@ public class Benutzer {
 
     public void setRolleid(int rolleid) {
         this.rolleid = rolleid;
+    }
+
+    public int getKlassenid() {
+        return klassenid;
+    }
+
+    public void setKlassenid(int klassenid) {
+        this.klassenid = klassenid;
     }
 }
