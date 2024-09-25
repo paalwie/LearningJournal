@@ -5,6 +5,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Elegantes Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
     <style>
         body {
             margin: 0;
@@ -164,7 +166,7 @@
             height: 3rem;
         }
     </style>
-</head>
+
 <body>
 <div id="app">
     <!-- Linke Navigationsleiste -->
@@ -172,7 +174,8 @@
         <h3>Menü</h3>
         <a th:href="@{/user/home}">Dashboard</a>
         <a th:href="@{/user/journal}">Journal</a>
-        <a href="/user/change-password">Passwort ändern</a>        <div class="logo">
+        <a th:href="@{/user/change-password}">Konto verwalten</a>
+        <div class="logo">
             <img alt="Logo" th:src="@{/images/logo2.png}">
         </div>
     </div>
