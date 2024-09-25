@@ -182,6 +182,8 @@
         <h3>Menü</h3>
         <a th:href="@{/admin/dashboard}">Dashboard</a>
         <a th:href="@{/admin/usermanagement}">User-Verwaltung</a>
+        <a th:href="@{/admin/classmanagement}">Klassen-Verwaltung</a>
+        <a th:href="@{/admin/categorymanagement}">Themen-Verwaltung</a>
         <a th:href="@{/user/account}">Konto Verwalten</a>
         <div class="logo">
             <img alt="Logo" th:src="@{/images/logo2.png}">
@@ -193,9 +195,9 @@
         <!-- Header -->
         <div class="header">
             <div class="avatar">
-                <img alt="Logo" th:src="@{/images/Avatar.png}">
+
             </div>
-            <h1>Hallo, <span th:text="${benutzername}">User</span>!</h1>
+            <h1>User-Verwaltung</h1>
 
             <!-- "Learning Journal" in der Mitte -->
         </div>
@@ -205,7 +207,7 @@
         <!-- Inhalt -->
         <div class="content">
 
-            <h1>User-Verwaltung</h1>
+
             <table>
                 <thead>
                 <tr>
