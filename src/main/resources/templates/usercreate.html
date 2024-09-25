@@ -45,18 +45,16 @@
         font-size: 20px;
     }
 
-    /* Logo */
     .sidebar .logo {
-        margin-top: auto; /* Pushes the logo to the bottom */
+        margin-top: auto;
         padding: 20px;
         text-align: center;
     }
 
     .sidebar .logo img {
-        width: 80%; /* Adjust the size of the logo */
+        width: 80%;
     }
 
-    /* Hauptinhalt */
     .main-content {
         margin-left: 200px;
         padding: 20px;
@@ -74,7 +72,7 @@
         padding: 20px;
         border-radius: 10px;
         display: flex;
-        justify-content: space-between; /* Space between for items */
+        justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -83,23 +81,21 @@
     .header h1 {
         font-size: 22px;
         color: #333;
-        margin-right: auto; /* Makes sure text aligns left */
+        margin-right: auto;
     }
 
-    /* "Learning Journal" zentrieren */
     .header .center-title {
-        font-family: 'Cursive', 'Comic Sans MS', sans-serif; /* Fancy Schriftart */
+        font-family: 'Cursive', 'Comic Sans MS', sans-serif;
         font-size: 28px;
         color: #e52e71;
         text-align: center;
         background: linear-gradient(45deg, #ff8a00, #e52e71);
         -webkit-background-clip: text;
-        color: transparent; /* Verwendet den Farbverlauf als Textfarbe */
+        color: transparent;
         font-weight: bold;
-        flex: 1; /* Take available space */
+        flex: 1;
     }
 
-    /* Logout Button */
     .header .logout {
         background-color: #ff4444;
         color: white;
@@ -109,7 +105,7 @@
         cursor: pointer;
         transition: background-color 0.3s;
         font-size: 14px;
-        margin-left: auto; /* Align logout button to the right */
+        margin-left: auto;
     }
 
     .header .logout:hover {
@@ -120,41 +116,65 @@
     .content {
         height: 70vh;
         display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 0;
+        flex-direction: column;
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
     }
 
     .content h1 {
         font-size: 24px;
         color: #444;
-        flex-grow: 1;
-        margin: 0;
+        margin-bottom: 20px;
     }
 
-    /* Rechte Seitenleiste mit Buttons */
-    .right-section {
+    /* Formular Layout */
+    form {
         display: flex;
         flex-direction: column;
         gap: 15px;
+        max-width: 600px;
+        width: 100%;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
 
-    .right-section button {
-        padding: 15px 25px;
+    form label {
         font-size: 16px;
-        border: none;
+        font-weight: bold;
+        color: #333;
+    }
+
+    form input {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    form input:focus {
+        border-color: #ff8a00;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 16px;
         background: linear-gradient(45deg, #ff8a00, #e52e71);
         color: white;
+        border: none;
         border-radius: 8px;
         cursor: pointer;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transition: background 0.3s, transform 0.2s;
     }
 
-    .right-section button:hover {
+    button:hover {
         background: linear-gradient(45deg, #e52e71, #ff8a00);
         transform: translateY(-2px);
     }
@@ -167,65 +187,50 @@
 </head>
 <body>
 <div id="app">
-  <!-- Linke Navigationsleiste -->
   <div class="sidebar">
     <h3>Menü</h3>
     <a th:href="@{/admin/dashboard}">Dashboard</a>
     <a th:href="@{/admin/usermanagement}">User-Verwaltung</a>
+    <a th:href="@{/admin/classmanagement}">Klassen-Verwaltung</a>
+    <a th:href="@{/admin/categorymanagement}">Themen-Verwaltung</a>
     <a th:href="@{/user/account}">Konto Verwalten</a>
     <div class="logo">
       <img alt="Logo" th:src="@{/images/logo2.png}">
     </div>
   </div>
 
-  <!-- Hauptinhalt -->
   <div class="main-content">
-    <!-- Header -->
     <div class="header">
       <div class="avatar">
-        <img alt="Logo" th:src="@{/images/Avatar.png}">
-      </div>
-      <h1>Hallo, <span th:text="${benutzername}">Admin</span>!</h1>
 
-      <!-- "Learning Journal" in der Mitte -->
+      </div>
+      <h1>Benutzer hinzufügen</h1>
       <div class="center-title">
         Learning Journal
       </div>
-
-      <!-- Logout Button -->
       <form th:action="@{/logout}" method="post">
         <button type="submit" class="logout">Logout</button>
       </form>
     </div>
 
-    <!-- Inhalt -->
     <div class="content">
-      <h1>Neuen Benutzer hinzufügen</h1>
+
       <form th:action="@{/admin/usercreate}" method="post">
-        <div>
-          <label for="benutzerid">Benutzer-ID:</label>
-          <input type="hidden" id="benutzerid" name="benutzerid" th:value="${newUser.benutzerid}">
-          <input type="number" id="benutzerid-display" value="${newUser.benutzerid}" disabled>
-        </div>
-        <div>
-          <label for="benutzername">Benutzername:</label>
-          <input type="text" id="benutzername" name="benutzername" required>
-        </div>
-        <div>
-          <label for="passwort">Passwort:</label>
-          <input type="password" id="passwort" name="passwort" required>
-        </div>
-        <div>
-          <label for="rolleid">Rolle ID:</label>
-          <input type="number" id="rolleid" name="rolleid" required>
-        </div>
-        <div>
-          <label for="klassenid">Klassen ID:</label>
-          <input type="number" id="klassenid" name="klassenid" required>
-        </div>
-        <div>
-          <button type="submit">Benutzer hinzufügen</button>
-        </div>
+
+
+        <label for="benutzername">Benutzername:</label>
+        <input type="text" id="benutzername" name="benutzername" required>
+
+        <label for="passwort">Passwort:</label>
+        <input type="password" id="passwort" name="passwort" required>
+
+        <label for="rolleid">Rolle ID:</label>
+        <input type="number" id="rolleid" name="rolleid" required>
+
+        <label for="klassenid">Klassen ID:</label>
+        <input type="number" id="klassenid" name="klassenid" required>
+
+        <button type="submit">Benutzer hinzufügen</button>
       </form>
     </div>
   </div>
