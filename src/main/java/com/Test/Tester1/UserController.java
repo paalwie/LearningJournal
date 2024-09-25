@@ -44,8 +44,24 @@ public class UserController {
 
     // Zeigt die Passwortänderungsseite an
     @GetMapping("/change-password")
-    public String showChangePasswordPage() {
+    public String showChangePasswordPage(Model model) {
+        // Hole den aktuell authentifizierten Benutzer
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        // Benutzerinformationen aus der Datenbank abrufen
+        Benutzer benutzer = benutzerRepository.findByBenutzername(username);
+
+        // Füge den Benutzernamen zum Model hinzu, um ihn in Thymeleaf anzuzeigen
+        model.addAttribute("benutzername", benutzer.getBenutzername());
+
         return "change-password";  // change-password.html anzeigen
+    }
+    private String capitalize(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1);
     }
 
     // Verarbeitet die Passwortänderung
@@ -54,21 +70,25 @@ public class UserController {
                                  @RequestParam String currentPassword,
                                  @RequestParam String newPassword,
                                  Model model) {
+        // Hole den aktuell authentifizierten Benutzer aus der Datenbank
 
-        // Hole den aktuell authentifizierten Benutzer
         Benutzer benutzer = benutzerRepository.findByBenutzername(userDetails.getUsername());
 
         // Überprüfe, ob das aktuelle Passwort korrekt ist
         if (!passwordEncoder.matches(currentPassword, benutzer.getPasswort())) {
             model.addAttribute("error", "Das aktuelle Passwort ist falsch.");
-            return "change-password";  // bei Fehler zeige die Seite erneut an
+        } else {
+            // Setze das neue Passwort
+            benutzer.setPasswort(passwordEncoder.encode(newPassword));
+            benutzerRepository.save(benutzer);
+            model.addAttribute("success", "Passwort wurde erfolgreich geändert.");
         }
 
-        // Setze das neue Passwort
-        benutzer.setPasswort(passwordEncoder.encode(newPassword));
-        benutzerRepository.save(benutzer);
+        capitalize(String.valueOf(benutzer));
 
-        model.addAttribute("success", "Passwort wurde erfolgreich geändert.");
-        return "change-password";  // zeige Erfolgsmeldung an
+        // Den Benutzernamen in das Model wieder hinzufügen
+        model.addAttribute("benutzername", benutzer.getBenutzername());
+
+        return "change-password";  // Zeige die Seite erneut an
     }
 }
