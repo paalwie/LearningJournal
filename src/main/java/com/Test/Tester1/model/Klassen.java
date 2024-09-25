@@ -4,7 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "klassen")
 public class Klassen {
@@ -15,17 +17,15 @@ public class Klassen {
     @Column(nullable = false)
     private String klassenname;
 
-    public Long getKlassenid() {
-        return klassenid;
-    }
     public void setKlassenid(Long klassenid) {
         this.klassenid = klassenid;
     }
-    public String getKlassenname() {
-        return klassenname;
-    }
+
     public void setKlassenname(String klassenname) {
         this.klassenname = klassenname;
     }
 
+    public String getKlassenname() {
+        return klassenname;
+    }
 }

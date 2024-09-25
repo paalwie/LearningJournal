@@ -1,10 +1,12 @@
 package com.Test.Tester1;
 
 import com.Test.Tester1.model.Benutzer;
+import com.Test.Tester1.model.Klassen;
 import com.Test.Tester1.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -20,10 +22,13 @@ public class UserController {
 
     private final UserRepository benutzerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository klassenRepository;
 
-    public UserController(UserRepository benutzerRepository, PasswordEncoder passwordEncoder) {
+
+    public UserController(UserRepository benutzerRepository, PasswordEncoder passwordEncoder, UserRepository klassenRepository) {
         this.benutzerRepository = benutzerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.klassenRepository = klassenRepository;
     }
 
     // Zeigt die Benutzerstartseite an
@@ -49,20 +54,15 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+
         // Benutzerinformationen aus der Datenbank abrufen
         Benutzer benutzer = benutzerRepository.findByBenutzername(username);
-
         // Füge den Benutzernamen zum Model hinzu, um ihn in Thymeleaf anzuzeigen
         model.addAttribute("benutzername", benutzer.getBenutzername());
-
+        model.addAttribute("klassenname", benutzer.getKlassen().getKlassenname());
         return "change-password";  // change-password.html anzeigen
     }
-    private String capitalize(String input) {
-        if (input == null || input.isEmpty()) {
-            return input;
-        }
-        return input.substring(0, 1).toUpperCase() + input.substring(1);
-    }
+
 
     // Verarbeitet die Passwortänderung
     @PostMapping("/change-password")
@@ -72,9 +72,7 @@ public class UserController {
                                  Model model) {
         // Hole den aktuell authentifizierten Benutzer aus der Datenbank
 
-        Benutzer benutzer = benutzerRepository.findByBenutzername(userDetails.getUsername());
-
-        // Überprüfe, ob das aktuelle Passwort korrekt ist
+        Benutzer benutzer = benutzerRepository.findByBenutzername(userDetails.getUsername());// Überprüfe, ob das aktuelle Passwort korrekt ist
         if (!passwordEncoder.matches(currentPassword, benutzer.getPasswort())) {
             model.addAttribute("error", "Das aktuelle Passwort ist falsch.");
         } else {
@@ -84,7 +82,6 @@ public class UserController {
             model.addAttribute("success", "Passwort wurde erfolgreich geändert.");
         }
 
-        capitalize(String.valueOf(benutzer));
 
         // Den Benutzernamen in das Model wieder hinzufügen
         model.addAttribute("benutzername", benutzer.getBenutzername());
