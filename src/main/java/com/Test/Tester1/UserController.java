@@ -3,24 +3,31 @@ package com.Test.Tester1;
 import com.Test.Tester1.model.Benutzer;
 import com.Test.Tester1.repository.UserRepository;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private final UserRepository benutzerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository benutzerRepository) {
+    public UserController(UserRepository benutzerRepository, PasswordEncoder passwordEncoder) {
         this.benutzerRepository = benutzerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/user/home")
+    // Zeigt die Benutzerstartseite an
+    @GetMapping("/home")
     public String userHome(Model model) {
         // Aktuelle Authentifizierung abrufen
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -33,5 +40,35 @@ public class UserController {
         model.addAttribute("benutzername", benutzer.getBenutzername());
 
         return "userHome";  // userHome.html anzeigen
+    }
+
+    // Zeigt die Passwortänderungsseite an
+    @GetMapping("/change-password")
+    public String showChangePasswordPage() {
+        return "change-password";  // change-password.html anzeigen
+    }
+
+    // Verarbeitet die Passwortänderung
+    @PostMapping("/change-password")
+    public String changePassword(@AuthenticationPrincipal UserDetails userDetails,
+                                 @RequestParam String currentPassword,
+                                 @RequestParam String newPassword,
+                                 Model model) {
+
+        // Hole den aktuell authentifizierten Benutzer
+        Benutzer benutzer = benutzerRepository.findByBenutzername(userDetails.getUsername());
+
+        // Überprüfe, ob das aktuelle Passwort korrekt ist
+        if (!passwordEncoder.matches(currentPassword, benutzer.getPasswort())) {
+            model.addAttribute("error", "Das aktuelle Passwort ist falsch.");
+            return "change-password";  // bei Fehler zeige die Seite erneut an
+        }
+
+        // Setze das neue Passwort
+        benutzer.setPasswort(passwordEncoder.encode(newPassword));
+        benutzerRepository.save(benutzer);
+
+        model.addAttribute("success", "Passwort wurde erfolgreich geändert.");
+        return "change-password";  // zeige Erfolgsmeldung an
     }
 }
