@@ -202,55 +202,23 @@
 
     <!-- Inhalt -->
     <div class="content">
-      <h1>Themen-Verwaltung</h1>
+      <h1>Thema bearbeiten</h1>
 
-      <h2>Neue Kategorie hinzufügen</h2>
-      <form th:action="@{/admin/category/add}" method="post">
+      <form th:action="@{/admin/category/update/{id}(id=${category.kategorieid})}" method="post">
         <div>
-          <label for="kategoriename">Kategoriename:</label>
-          <input type="text" id="kategoriename" name="kategoriename" required />
+          <label for="kategoriename">Kategoriename</label>
+          <input type="text" id="kategoriename" name="kategoriename" th:value="${category.kategoriename}" required />
         </div>
         <div>
-          <label for="kategoriebeschreibung">Kategoriebeschreibung:</label>
-          <input type="text" id="kategoriebeschreibung" name="kategoriebeschreibung" required />
+          <label for="kategoriebeschreibung">Kategoriebeschreibung</label>
+          <input type="text" id="kategoriebeschreibung" name="kategoriebeschreibung" th:value="${category.kategoriebeschreibung}" required />
         </div>
         <div>
-          <button type="submit" class="btn btn-primary">Kategorie hinzufügen</button>
+          <button type="submit" class="btn btn-success">Speichern</button>
         </div>
         <!-- CSRF Token hinzufügen -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
       </form>
-
-      <!-- Tabellenform zur Darstellung der Kategorien -->
-      <h2>Vorhandene Kategorien</h2>
-      <table>
-        <thead>
-        <tr>
-          <th>Kategoriename</th>
-          <th>Kategoriebeschreibung</th>
-          <th>Bearbeiten</th>
-          <th>Löschen</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="category : ${categoryList}">
-          <td th:text="${category.kategoriename}">Kategoriename</td>
-          <td th:text="${category.kategoriebeschreibung}">Kategoriebeschreibung</td>
-          <td>
-            <!-- Bearbeiten-Button, leitet zur Bearbeitungsseite weiter -->
-            <a th:href="@{/admin/category/edit/{id}(id=${category.kategorieid})}" class="btn btn-primary">Bearbeiten</a>
-            </td>
-          <td>
-            <!-- Löschen-Formular -->
-            <form th:action="@{/admin/category/delete/{id}(id=${category.kategorieid})}" method="post" style="display:inline;">
-              <button type="submit" class="btn btn-danger" onclick="return confirm('Bist du sicher, dass du diese Kategorie löschen möchtest?')">Löschen</button>
-              <!-- CSRF Token -->
-              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            </form>
-          </td>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
