@@ -27,6 +27,11 @@ public class Journal {
     @Column(nullable = false)
     private LocalTime erstellungszeit;
 
+    // Korrekte Beziehung zur Kategorie
+    @ManyToOne
+    @JoinColumn(name = "kategorieid")  // Entferne "insertable = false, updatable = false"
+    private Themen kategorie;  // Das gesamte Kategorie-Objekt statt nur der ID
+
     // Getter und Setter
     public Long getEintragid() {
         return eintragid;
@@ -34,6 +39,14 @@ public class Journal {
 
     public void setEintragid(Long eintragid) {
         this.eintragid = eintragid;
+    }
+
+    public  Themen getKategorie() {
+        return kategorie;
+    }
+
+    public void setKategorie(Themen kategorie) {
+        this.kategorie = kategorie;
     }
 
     public String getTitel() {

@@ -257,11 +257,16 @@
             <p th:text="${entry.erstellungsdatum}">Datum</p>
             <p th:text="${entry.erstellungszeit}">Uhrzeit</p>
 
+            <h3>Kategorie</h3>
+            <p>Kategoriename: <span th:text="${kategorie.kategoriename}">Kategoriename</span></p> <!-- Kategorie-Name -->
+            <p>Kategoriebeschreibung: <span th:text="${kategorie.kategoriebeschreibung}">Kategoriebeschreibung</span></p> <!-- Kategorie-Beschreibung -->
+
             <h3>Inhalt</h3>
             <p th:text="${entry.inhalt}">Inhalt des Eintrags</p>
 
             <a href="/user/journal">Zurück zu meinen Einträgen</a>
             </div>
         </div>
+    </div>
 </body>
 </html>

@@ -232,7 +232,20 @@
     <div class="right-column">
         <h1>Neuen Journaleintrag erstellen</h1>
 
-        <form action="/user/journal/create" method="post">
+        <form action="/user/journal/create" th:object="${journal}" method="post">
+
+
+            <div>
+                <label for="category">Kategorie:</label>
+                <select id="category" name="kategorieid"> <!-- Name wird an den Controller gesendet -->
+                    <option value="" disabled selected>Bitte wählen</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.kategorieid}"
+                            th:text="${category.kategoriename}"> <!-- Verweise hier auf den richtigen Namen -->
+                    </option>
+                </select>
+            </div>
+
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
             <label for="titel">Titel:</label>
