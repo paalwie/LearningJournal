@@ -1,36 +1,49 @@
 package com.Test.Tester1;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
 
-
     @GetMapping("/admin/dashboard")
-    public String adminDashboard() {
-        System.out.println("hallo1");
+    public String adminDashboard(@AuthenticationPrincipal UserDetails currentUser, Model model) {
+        // Benutzername des eingeloggten Benutzers hinzufügen
+        if (currentUser != null) {
+            model.addAttribute("benutzername", currentUser.getUsername());
+        } else {
+            model.addAttribute("benutzername", "Gast");
+        }
         return "adminDashboard";  // adminDashboard.html
     }
 
-    /*
-    @GetMapping("/user/home")
-    public String userHome() {
-        System.out.println("hallo2");
-        return "userHome";  // userHome.html
-    }
-    */
-
     @GetMapping("/start")
-    public String startPage() {
-        System.out.println("hallo3");
+    public String startPage(@AuthenticationPrincipal UserDetails currentUser, Model model) {
+        // Benutzername des eingeloggten Benutzers hinzufügen
+        if (currentUser != null) {
+            model.addAttribute("benutzername", currentUser.getUsername());
+        } else {
+            model.addAttribute("benutzername", "Gast");
+        }
         return "start";  // start.html
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        System.out.println("hallo4");
         return "login";  // login.html
     }
+
+    @Controller
+    @RequestMapping("/admin")
+    public class AdminController {
+        @GetMapping("/admin-Change-Password")
+        public String showChangePasswordPage() {
+            return "adminChangePassword";
+        }
+    }
+
 }

@@ -4,6 +4,8 @@ import com.Test.Tester1.model.Benutzer;
 import com.Test.Tester1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +22,30 @@ public class AdminUserController {
 
     // Diese Methode wird aufgerufen, wenn du /admin/usermanagement aufrufst
     @GetMapping("/usermanagement")
-    public String getAllUsers(@RequestParam(defaultValue = "benutzerid") String sortBy, Model model) {
+    public String getAllUsers(
+            @RequestParam(defaultValue = "benutzerid") String sortBy,
+            Model model,
+            @AuthenticationPrincipal UserDetails currentUser) {
+
         List<Benutzer> users = userRepository.findAll(Sort.by(sortBy));  // Sortierung basierend auf dem Parameter
         model.addAttribute("users", users);
         model.addAttribute("currentSort", sortBy);  // Aktuelle Sortierung zur View hinzufügen
+
+        // Benutzername des eingeloggten Benutzers hinzufügen
+        model.addAttribute("benutzername", currentUser.getUsername());
+
         return "usermanagement";
     }
 
     @GetMapping("/usercreate")
-    public String showCreateUserForm(Model model) {
+    public String showCreateUserForm(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Benutzer newUser = new Benutzer();
         newUser.setBenutzerid(getNextBenutzerId());  // Automatische ID setzen
         model.addAttribute("newUser", newUser);  // Übergibt den Benutzer an das Template
+
+        // Benutzername des eingeloggten Benutzers hinzufügen
+        model.addAttribute("benutzername", currentUser.getUsername());
+
         return "usercreate";  // Zeigt das Formular zur Benutzererstellung
     }
 
@@ -57,9 +71,13 @@ public class AdminUserController {
     }
 
     @GetMapping("/useredit/{id}")
-    public String editUser(@PathVariable("id") Long benutzerid, Model model) {
+    public String editUser(@PathVariable("id") Long benutzerid, Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Benutzer user = userRepository.findById(benutzerid).orElseThrow(() -> new IllegalArgumentException("Ungültige Benutzer-ID:" + benutzerid));
         model.addAttribute("user", user);  // Benutzer-Daten werden an die View übergeben
+
+        // Benutzername des eingeloggten Benutzers hinzufügen
+        model.addAttribute("benutzername", currentUser.getUsername());
+
         return "useredit";  // Rendere die Seite useredit.html
     }
 

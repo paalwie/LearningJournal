@@ -20,7 +20,7 @@ public class AdminCategoryController {
     private CategoryRepository categoryRepository;
 
     // 1. Kategorieverwaltung anzeigen
-    @GetMapping("/categorymanagement")
+    @GetMapping("/categorymanagement") // /category
     public String showCategoryManagement(Model model) {
         // Alle Kategorien aus der Datenbank abrufen
         List<Themen> categoryList = categoryRepository.findAll();
@@ -31,7 +31,7 @@ public class AdminCategoryController {
     }
 
     // 2. Neue Kategorie hinzufügen
-    @PostMapping("/category/add")
+    @PostMapping("/category/add") // /category
     public String addCategory(@RequestParam String kategoriename, @RequestParam String kategoriebeschreibung) {
         Themen newCategory = new Themen();
         newCategory.setKategoriename(kategoriename);
@@ -47,7 +47,7 @@ public class AdminCategoryController {
     }
 
     // 3. Bearbeitungsseite anzeigen
-    @GetMapping("/category/edit/{id}")
+    @GetMapping("/category/edit/{id}") // /category/{id}
     public String showEditCategory(@PathVariable Long id, Model model) {
         Themen category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ungültige Kategorie-ID: " + id));
@@ -56,7 +56,7 @@ public class AdminCategoryController {
     }
 
     // 4. Kategorie bearbeiten (nach dem Absenden des Formulars)
-    @PostMapping("/category/update/{id}")
+    @PostMapping("/category/update/{id}") // /category/{id}
     public String updateCategory(@PathVariable Long id, @RequestParam String kategoriename, @RequestParam String kategoriebeschreibung) {
         Themen category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Ungültige Kategorie-ID: " + id));
@@ -67,9 +67,10 @@ public class AdminCategoryController {
     }
 
     // 5. Kategorie löschen
-    @PostMapping("/category/delete/{id}")
+    @PostMapping("/category/delete/{id}") // /category/{id}
     public String deleteCategory(@PathVariable Long id) {
         categoryRepository.deleteById(id);
         return "redirect:/admin/categorymanagement"; // Leitet nach dem Löschen zurück zur Verwaltung
     }
+
 }

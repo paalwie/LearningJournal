@@ -68,12 +68,18 @@ public class Journal {
         this.erstellungsdatum = erstellungsdatum;
     }
 
-    public LocalTime getErstellungszeit() {
-        return erstellungszeit;
+   public LocalTime getErstellungszeit() {
+       return erstellungszeit;
     }
 
     public void setErstellungszeit(LocalTime erstellungszeit) {
         this.erstellungszeit = erstellungszeit;
+    }
+    public void setuhrzeit_mit_millisekunden(LocalTime now) {
+
+    }
+
+    public void getuhrzeit_ohne_millisekunden(LocalTime now) {
     }
 }
 
