@@ -181,6 +181,17 @@
           <label for="inhalt">Inhalt:</label>
           <textarea id="inhalt" name="inhalt" required th:text="${journal.inhalt}"></textarea>
         </div>
+        <div>
+          <label for="kategorie">Kategorie:</label>
+          <select id="kategorie" name="kategorie" required>
+            <!-- Hier werden alle verfügbaren Kategorien aufgelistet -->
+            <option th:each="kategorie : ${categories}"
+                    th:value="${kategorie.kategorieid}"
+                    th:text="${kategorie.kategoriename}"
+                    th:selected="${kategorie.kategorieid == journal.kategorie.kategorieid}">
+            </option>
+          </select>
+        </div>
         <button type="submit">Update Eintrag</button>
       </form>
     </div>

@@ -259,6 +259,7 @@
           <th>Titel</th>
           <th>Erstellungsdatum</th>
           <th>Erstellungszeit</th>
+          <th>Kategorie</th>
           <th>Aktionen</th>
         </tr>
         </thead>
@@ -267,6 +268,12 @@
           <td th:text="${entry.titel}"></td>
           <td th:text="${entry.erstellungsdatum}"></td>
           <td th:text="${entry.erstellungszeit}"></td>
+          <td>
+            <div>
+              <strong th:text="${entry.kategorie.kategoriename}"></strong>
+              <p th:text="${entry.kategorie.kategoriebeschreibung}"></p>
+            </div>
+          </td>
           <td>
             <a class="button-read" th:href="@{/user/journal/{id}(id=${entry.eintragid})}">Lesen</a>
             <a class="button-edit" th:href="@{/user/journal/edit/{id}(id=${entry.eintragid})}">Bearbeiten</a>
