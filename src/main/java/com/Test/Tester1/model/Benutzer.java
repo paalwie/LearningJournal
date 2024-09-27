@@ -1,10 +1,11 @@
-package com.Test.Tester1.model;import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+package com.Test.Tester1.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "benutzer")
 public class Benutzer {
@@ -21,10 +22,10 @@ public class Benutzer {
     @Column(nullable = false)
     private int rolleid;
 
-    @Column(nullable = false)
-    private int klassenid;
-
-    // Weitere Felder, falls benötigt
+    // Beziehung zur Klasse 'Klassen' (Many-to-One)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "klassenid", referencedColumnName = "klassenid", insertable = false, updatable = false)
+    private Klassen klassen;
 
     // Getter und Setter
     public Long getBenutzerid() {
@@ -59,11 +60,18 @@ public class Benutzer {
         this.rolleid = rolleid;
     }
 
-    public int getKlassenid() {
-        return klassenid;
+    public Klassen getKlassen() {
+        return klassen;
     }
 
-    public void setKlassenid(int klassenid) {
-        this.klassenid = klassenid;
+    public void setKlassen(Klassen klassen) {
+        this.klassen = klassen;
+    }
+
+    public Object getKlassenid() {
+        return klassen;
+    }
+
+    public void setKlassenid(Object klassenid) {
     }
 }
