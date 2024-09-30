@@ -59,7 +59,7 @@ public class AdminSettingsController {
         benutzerRepository.save(benutzer);
 
         model.addAttribute("success", "Passwort erfolgreich geändert.");
-        return "redirect:/admin/dashboard"; // Hier die gewünschte Weiterleitungsseite angeben
+        return "admin-Change-Password"; // Hier die gewünschte Weiterleitungsseite angeben
     }
 
 }
