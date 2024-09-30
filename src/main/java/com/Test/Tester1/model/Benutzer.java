@@ -27,6 +27,10 @@ public class Benutzer {
     @JoinColumn(name = "klassenid", referencedColumnName = "klassenid", insertable = false, updatable = false)
     private Klassen klassen;
 
+    @ManyToOne
+    @JoinColumn(name = "vortragsthemaid")
+    private Vortragsthema vortragsthema; // Beziehung zur Vortragsthemen-Tabelle
+
     // Getter und Setter
     public Long getBenutzerid() {
         return benutzerid;
@@ -74,4 +78,13 @@ public class Benutzer {
 
     public void setKlassenid(Object klassenid) {
     }
+
+    public Vortragsthema getVortragsthema() {
+        return vortragsthema;
+    }
+
+    public void setVortragsthema(Vortragsthema vortragsthema) {
+        this.vortragsthema = vortragsthema;
+    }
+
 }

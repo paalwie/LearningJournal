@@ -2,6 +2,7 @@ package com.Test.Tester1;
 
 import com.Test.Tester1.model.Benutzer;
 import com.Test.Tester1.model.Klassen;
+import com.Test.Tester1.model.Vortragsthema;
 import com.Test.Tester1.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 
 @Controller
 @RequestMapping("/user")
@@ -41,10 +45,40 @@ public class UserController {
         // Benutzerinformationen aus der Datenbank abrufen
         Benutzer benutzer = benutzerRepository.findByBenutzername(username);
 
+// Hole das Vortragsthema (wenn vorhanden)
+        Vortragsthema vortragsthema = null;
+        if (benutzer != null && benutzer.getVortragsthema() != null) {
+            vortragsthema = benutzer.getVortragsthema();
+        }
+
+        LocalDate dueDate = calculateDueDate();
+
+        model.addAttribute("vortragsthema", vortragsthema != null ? vortragsthema.getThema() : null);
+        model.addAttribute("dueDate", dueDate);
+
         // Den Benutzernamen in das Model hinzufügen, um ihn in Thymeleaf anzuzeigen
         model.addAttribute("benutzername", benutzer.getBenutzername());
 
         return "userHome";  // userHome.html anzeigen
+    }
+
+    private LocalDate calculateDueDate() {
+        LocalDate now = LocalDate.now();
+        LocalDate lastThursday = now.with(TemporalAdjusters.lastInMonth(java.time.DayOfWeek.THURSDAY));
+
+        // Überprüfen, ob das heutige Datum nach dem letzten Donnerstag liegt
+        if (now.isAfter(lastThursday)) {
+            lastThursday = lastThursday.plusMonths(1); // Nächster Monat
+        }
+
+        return lastThursday;
+    }
+
+    private String getVortragsthemaForUser(Long userId) {
+        // Logik zur Abfrage des Vortragsthemas des Benutzers
+        // Gibt ein Thema oder null zurück, wenn kein Thema vergeben ist
+        // Beispiel-Rückgabe
+        return null; // oder der tatsächliche Thema-String
     }
 
     // Zeigt die Passwortänderungsseite an

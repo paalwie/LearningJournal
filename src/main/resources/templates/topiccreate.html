@@ -9,60 +9,60 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background-color: #eaeaea;
+            background-color: #f5f5f5;
         }
 
         /* Linke Navigationsleiste */
         .sidebar {
             height: 100vh;
-            width: 200px;
-            background: linear-gradient(180deg, #444, #555);
+            width: 220px;
+            background: linear-gradient(180deg, #4e4e4e, #626262);
             padding-top: 40px;
             position: fixed;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar a {
             padding: 15px 20px;
             text-decoration: none;
             font-size: 16px;
-            color: #fff;
+            color: #ffffff;
             display: block;
             transition: background-color 0.3s, padding-left 0.3s;
         }
 
         .sidebar a:hover {
-            background-color: #666;
-            padding-left: 25px;
+            background-color: #797979;
+            padding-left: 30px;
         }
 
         .sidebar h3 {
             padding-left: 20px;
             color: #fff;
             margin-bottom: 30px;
-            font-size: 20px;
+            font-size: 22px;
         }
 
         /* Logo */
         .sidebar .logo {
-            margin-top: auto; /* Pushes the logo to the bottom */
+            margin-top: auto;
             padding: 20px;
             text-align: center;
         }
 
         .sidebar .logo img {
-            width: 80%; /* Adjust the size of the logo */
+            width: 85%;
         }
 
         /* Hauptinhalt */
         .main-content {
-            margin-left: 200px;
-            padding: 20px;
-            width: calc(100% - 250px);
+            margin-left: 220px;
+            padding: 25px;
+            width: calc(100% - 220px);
             background-color: #fff;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1);
@@ -74,29 +74,28 @@
             padding: 20px;
             border-radius: 10px;
             display: flex;
-            justify-content: space-between; /* Space between for items */
+            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .header h1 {
-            font-size: 22px;
+            font-size: 24px;
             color: #333;
-            margin-right: auto; /* Makes sure text aligns left */
+            margin-right: auto;
         }
 
-        /* "Learning Journal" zentrieren */
         .header .center-title {
-            font-family: 'Cursive', 'Comic Sans MS', sans-serif; /* Fancy Schriftart */
-            font-size: 28px;
+            font-family: 'Cursive', 'Comic Sans MS', sans-serif;
+            font-size: 30px;
             color: #e52e71;
             text-align: center;
             background: linear-gradient(45deg, #ff8a00, #e52e71);
             -webkit-background-clip: text;
-            color: transparent; /* Verwendet den Farbverlauf als Textfarbe */
+            color: transparent;
             font-weight: bold;
-            flex: 1; /* Take available space */
+            flex: 1;
         }
 
         /* Logout Button */
@@ -109,7 +108,7 @@
             cursor: pointer;
             transition: background-color 0.3s;
             font-size: 14px;
-            margin-left: auto; /* Align logout button to the right */
+            margin-left: auto;
         }
 
         .header .logout:hover {
@@ -118,60 +117,104 @@
 
         /* Inhalt */
         .content {
-            height: 70vh;
+            height: 75vh;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 0;
+            flex-direction: column;
             background-color: #fff;
             border-radius: 10px;
+            padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .content h1 {
-            font-size: 24px;
+            font-size: 26px;
             color: #444;
-            flex-grow: 1;
-            margin: 0;
+            margin-bottom: 20px;
         }
 
-        /* Rechte Seitenleiste mit Buttons */
-        .right-section {
+        /* Klasse hinzufügen */
+        form {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .right-section button {
-            padding: 15px 25px;
+        form input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            padding: 10px 20px;
             font-size: 16px;
             border: none;
             background: linear-gradient(45deg, #ff8a00, #e52e71);
             color: white;
             border-radius: 8px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background 0.3s, transform 0.2s;
         }
 
-        .right-section button:hover {
+        form button:hover {
             background: linear-gradient(45deg, #e52e71, #ff8a00);
             transform: translateY(-2px);
         }
 
-        .avatar > img {
-            width: 3rem;
-            height: 3rem;
-        }
-
-         table {
+        /* Tabelle */
+        table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 20px;
         }
-        th, td {
-            padding: 10px;
+
+        table th, table td {
+            padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-size: 18px;
+            color: #333;
+        }
+
+        table td {
+            font-size: 16px;
+            color: #555;
+        }
+
+        table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .btn-danger {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff6666;
         }
     </style>
 </head>
@@ -184,6 +227,7 @@
         <a th:href="@{/admin/usermanagement}">User-Verwaltung</a>
         <a th:href="@{/admin/classmanagement}">Klassen-Verwaltung</a>
         <a th:href="@{/admin/categorymanagement}">Themen-Verwaltung</a>
+        <a th:href="@{/admin/topicmanagement}">Vortrags-Verwaltung</a>
         <a th:href="@{/user/account}">Konto Verwalten</a>
         <div class="logo">
             <img alt="Logo" th:src="@{/images/logo2.png}">
@@ -197,55 +241,53 @@
             <div class="avatar">
 
             </div>
-            <h1>User-Verwaltung</h1>
+            <h1>Vortragsthemen-Verwaltung</h1>
 
             <!-- "Learning Journal" in der Mitte -->
+            <div class="center-title">
+                Learning Journal
+            </div>
+
+            <!-- Logout Button -->
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="logout">Logout</button>
+            </form>
         </div>
-        <a th:href="@{/admin/usercreate}">
-            <button>Benutzer hinzufügen</button>
-        </a>
+
         <!-- Inhalt -->
         <div class="content">
 
 
-            <table>
-                <thead>
-                <tr>
-                    <!-- Sortierbare Spalten -->
-                    <th><a th:href="@{/admin/usermanagement(sortBy='benutzerid')}">Benutzer ID</a></th>
-                    <th><a th:href="@{/admin/usermanagement(sortBy='benutzername')}">Benutzername</a></th>
-                    <th><a th:href="@{/admin/usermanagement(sortBy='rolleid')}">Rollen ID</a></th>
-                    <th><a th:href="@{/admin/usermanagement(sortBy='klassenid')}">Klassen ID</a></th>
-                    <!-- Weitere Spalten nach Bedarf -->
-                    <th>Passwort</th>
-                    <th>Bearbeiten</th>
-                    <th>Löschen</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.benutzerid}"></td>
-                    <td th:text="${user.benutzername}"></td>
-                    <td th:text="${user.rolleid}"></td>
-                    <td th:text="${user.klassenid}"></td>
-                    <td th:text="${user.passwort}"></td>
-                    <td>
-                        <form th:action="@{/admin/useredit/{id}(id=${user.benutzerid})}" method="get">
-                            <button type="submit" class="btn btn-warning">Bearbeiten</button>
-                        </form>
-                    </td>
-                    <td>
-                        <form th:action="@{/admin/userdelete/{id}(id=${user.benutzerid})}" method="post">
-                            <button type="submit" class="btn btn-danger">Löschen</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <h1>Vortragsthema hinzufügen</h1>
+
+
+
+            <form action="#" th:action="@{/admin/topiccreate}" th:object="${topic}" method="post">
+                <div>
+                    <label for="thema">Thema:</label>
+                    <input type="text" id="thema" th:field="*{thema}" required>
+                </div>
+
+                <div>
+                    <label for="themen">Kategorie:</label>
+                    <select id="themen" th:field="*{themen}" required>
+                        <option value="" disabled selected>Bitte wählen</option>
+                        <option th:each="themen : ${kategorien}"
+                                th:value="${themen.kategorieid}"
+                                th:text="${themen.kategoriename}"></option> <!-- Hier den kategorieName anzeigen -->
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit">Thema speichern</button>
+                </div>
+            </form>
+
+
+
         </div>
     </div>
 </div>
-
 <script>
     new Vue({
         el: '#app',

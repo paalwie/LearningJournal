@@ -29,6 +29,8 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/user/home").setViewName("userHome");
         registry.addViewController("/admin/dashboard").setViewName("adminDashboard");
         registry.addViewController("/access-denied").setViewName("accessDenied");
+        registry.addViewController("/admin/admin2").setViewName("admin2");
+        registry.addViewController("/user/user2").setViewName("user2");
         registry.addViewController("/logout").setViewName("start");
         registry.addViewController("user/journal").setViewName("userJournal");
         registry.addViewController("user/journalcreate").setViewName("journalcreate");
@@ -41,9 +43,6 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/admin/categorymanagement").setViewName("categorymanagement");
         registry.addViewController("/admin/classedit").setViewName("classedit");
         registry.addViewController("/admin/categoryedit").setViewName("categoryedit");
-        registry.addViewController("/admin/classcreate").setViewName("classcreate");
-        registry.addViewController("/admin/categorycreate").setViewName("categorycreate");
-        registry.addViewController("/admin/admin-Change-Password").setViewName("admin-Change-Password");
 
     }
 }
