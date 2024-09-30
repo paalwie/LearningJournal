@@ -24,7 +24,7 @@ public class Benutzer {
 
     // Beziehung zur Klasse 'Klassen' (Many-to-One)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "klassenid", referencedColumnName = "klassenid", insertable = false, updatable = false)
+    @JoinColumn(name = "klassenid", referencedColumnName = "klassenid")
     private Klassen klassen;
 
     @ManyToOne

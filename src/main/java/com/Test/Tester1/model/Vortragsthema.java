@@ -11,7 +11,7 @@ public class Vortragsthema {
 
     @ManyToOne
     @JoinColumn(name = "kategorieID", nullable = false)
-    private Themen themen;  // Beziehung zur Kategorie
+    private Themen themen;
 
 
     private String thema;

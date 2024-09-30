@@ -259,59 +259,37 @@
 
 
       <h1>Verwaltung der Vortragsthemen</h1>
+      <h2>Klassenverwaltung</h2>
 
-      <!-- Button zum Hinzufügen eines neuen Vortragsthemas -->
-      <a th:href="@{/admin/topiccreate}">
-        <button>Vortragsthema hinzufügen</button>
-      </a>
+      <!-- Dropdown zur Auswahl der Klasse -->
+      <form th:action="@{/admin/classManagementTopics}" method="post">
+        <label for="klasse">Klasse auswählen:</label>
+        <select name="klassenid" id="klasse" required>
+          <option value="" disabled selected>Wähle eine Klasse</option>
+          <option th:each="klasse : ${klassen}" th:value="${klasse.klassenid}" th:text="${klasse.klassenname}"></option>
+        </select>
+        <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
+        <button type="submit">Anzeigen</button>
+      </form>
 
-      <table border="1">
+      <!-- Tabelle zur Anzeige der Benutzer und ihrer Themen -->
+      <h3>Benutzer und zugewiesene Themen</h3>
+      <table>
         <thead>
         <tr>
-          <th>ID</th>
-          <th>Thema</th>
-          <th>Kategorie-Name</th>
-          <th>Löschen</th>
+          <th>Benutzername</th>
+          <th>Zugewiesenes Thema</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Schleife über die Themen -->
-        <tr th:each="topic : ${topics}">
-          <td th:text="${topic.vortragsthemaID}"></td>
-          <td th:text="${topic.thema}"></td>
-          <td th:text="${topic.themen.kategoriename}"></td>
-          <td>
-            <form th:action="@{/admin/topicdelete/{id}(id=${topic.vortragsthemaID})}" method="post">
-              <button type="submit" class="btn btn-danger">Löschen</button>
-            </form>
-          </td>
+        <tr th:each="benutzer : ${benutzerListe}">
+          <td th:text="${benutzer.benutzername}"></td>
+          <td th:text="${benutzerThemen[benutzer.benutzerid]}"></td>
         </tr>
         </tbody>
       </table>
 
-      <!-- Dropdown zur Auswahl der Klasse und Kategorie -->
-      <h2>Themen Zuweisung nach Klasse</h2>
-      <form th:action="@{/admin/assignTopics}" method="post">
-        <label for="klasse">Klasse auswählen:</label>
-        <select name="klassenid" id="klasse">
-          <option value="" disabled selected>Wähle eine Klasse</option>
-          <option th:each="klasse : ${klassen}" th:value="${klasse.klassenid}" th:text="${klasse.klassenname}">
-          </option>
-        </select>
-
-        <label for="kategorie">Kategorie auswählen:</label>
-        <select name="kategorieid" id="kategorie">
-          <option value="" disabled selected>Wähle eine Kategorie</option>
-          <option th:each="kategorie : ${kategorien}" th:value="${kategorie.kategorieid}" th:text="${kategorie.kategoriename}">
-          </option>
-        </select>
-
-        <input type="hidden" th:name="_csrf" th:value="${_csrf.token}" />
-        <button type="submit">Themen zuweisen</button>
-      </form>
-
-      <a th:href="@{/admin/classManagementTopics}">Zur Klassenansicht</a>
-
+      <a href="/admin/topicmanagement">Zurück zur Themenverwaltung</a> <!-- Rücklink zur Themenverwaltung -->
     </div>
   </div>
 </div>

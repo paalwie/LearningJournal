@@ -258,8 +258,10 @@
         <label for="rolleid">Rolle ID:</label>
         <input type="number" id="rolleid" name="rolleid" required>
 
-        <label for="klassenid">Klassen ID:</label>
-        <input type="number" id="klassenid" name="klassenid" required>
+        <label for="klassen">Klasse:</label>
+        <select id="klassen" name="klassen">
+          <option th:each="klasse : ${klassen}" th:value="${klasse.klassenid}" th:text="${klasse.klassenname}"></option>
+        </select>
 
         <button type="submit">Benutzer hinzufügen</button>
       </form>

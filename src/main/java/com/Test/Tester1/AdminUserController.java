@@ -1,8 +1,11 @@
 package com.Test.Tester1;
 
 import com.Test.Tester1.model.Benutzer;
+import com.Test.Tester1.model.Klassen;
+import com.Test.Tester1.repository.ClassRepository;
 import com.Test.Tester1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +22,8 @@ public class AdminUserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClassRepository classRepository;
 
     // Diese Methode wird aufgerufen, wenn du /admin/usermanagement aufrufst
     @GetMapping("/usermanagement")
@@ -41,6 +46,10 @@ public class AdminUserController {
     public String showCreateUserForm(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         Benutzer newUser = new Benutzer();
         newUser.setBenutzerid(getNextBenutzerId());  // Automatische ID setzen
+
+        List<Klassen> classes = classRepository.findAll();
+        model.addAttribute("klassen", classes);
+
         model.addAttribute("newUser", newUser);  // Übergibt den Benutzer an das Template
 
         // Benutzername des eingeloggten Benutzers hinzufügen
@@ -50,10 +59,18 @@ public class AdminUserController {
     }
 
     @PostMapping("/usercreate")
-    public String createUser(Benutzer newUser) {
+    public String createUser(@ModelAttribute Benutzer newUser, @RequestParam("klassen") Long klassenId) {
         if (newUser.getBenutzerid() == null) {
             newUser.setBenutzerid(getNextBenutzerId()); // Fallback falls Benutzer-ID nicht gesetzt
         }
+
+        // Klasse aus der Datenbank laden
+        Klassen selectedClass = classRepository.findById(klassenId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Klassen ID: " + klassenId));
+
+        // Der neuen Benutzerinstanz die Klasse zuweisen
+        newUser.setKlassen(selectedClass);
+
         // Optional: Passwort-Hashing hinzufügen
         userRepository.save(newUser);  // Speichert den neuen Benutzer in der Datenbank
         return "redirect:/admin/usermanagement";  // Leitet zurück zur Benutzerübersicht
