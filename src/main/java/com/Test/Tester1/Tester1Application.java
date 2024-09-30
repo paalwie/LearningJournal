@@ -22,6 +22,7 @@ public class Tester1Application {
 	@Autowired
 	private DataSource dataSource;
 
+	// Verbindung zum Datenbank testen
 	@PostConstruct
 	public void testConnection() throws SQLException {
 		try (Connection connection = dataSource.getConnection()) {
