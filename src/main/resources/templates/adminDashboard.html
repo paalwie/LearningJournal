@@ -7,212 +7,165 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <style>
         body {
-          margin: 0;
-          font-family: 'Arial', sans-serif;
-          background-color: #eaeaea;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #2e2e2e; /* Dunklerer Hintergrund */
         }
 
         /* Linke Navigationsleiste */
         .sidebar {
-          height: 100vh;
-          width: 200px;
-          background: linear-gradient(180deg, #444, #555);
-          padding-top: 40px;
-          position: fixed;
-          display: flex;
-          flex-direction: column;
-          box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            height: 100vh;
+            width: 200px;
+            background: linear-gradient(180deg, #333, #444); /* Leicht dunklerer Verlauf */
+            padding-top: 40px;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .sidebar a {
-          padding: 15px 20px;
-          text-decoration: none;
-          font-size: 16px;
-          color: #fff;
-          display: block;
-          transition: background-color 0.3s, padding-left 0.3s;
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #fff;
+            display: block;
+            transition: background-color 0.3s, padding-left 0.3s;
         }
 
         .sidebar a:hover {
-          background-color: #666;
-          padding-left: 25px;
+            background-color: #555;
+            padding-left: 25px;
         }
 
         .sidebar h3 {
-          padding-left: 20px;
-          color: #fff;
-          margin-bottom: 30px;
-          font-size: 20px;
+            padding-left: 20px;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 20px;
         }
 
         .sidebar .logo {
-          margin-top: auto;
-          padding: 20px;
-          text-align: center;
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
         }
 
         .sidebar .logo img {
-          width: 80%;
+            width: 80%;
         }
 
         /* Hauptinhalt */
         .main-content {
-          margin-left: 200px;
-          padding: 20px;
-          width: calc(100% - 250px);
-          background-color: #fff;
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.1);
+            margin-left: 200px;
+            padding: 20px;
+            width: calc(100% - 250px);
+            background-color: #1c1c1c; /* Dunkler Hintergrund des Hauptinhalts */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2);
         }
 
         /* Header */
         .header {
-          background-color: #fff;
-          padding: 20px;
-          border-radius: 10px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #333; /* Dunklerer Header-Hintergrund */
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .header h1 {
-          font-size: 22px;
-          color: #333;
-          margin-right: auto;
+            font-size: 22px;
+            color: #fff; /* Weißer Text für Kontrast */
+            margin-right: auto;
         }
 
         .header .center-title {
-          font-family: 'Cursive', 'Comic Sans MS', sans-serif;
-          font-size: 28px;
-          color: #e52e71;
-          text-align: center;
-          background: linear-gradient(45deg, #ff8a00, #e52e71);
-          -webkit-background-clip: text;
-          color: transparent;
-          font-weight: bold;
-          flex: 1;
+            font-family: 'Cursive', 'Comic Sans MS', sans-serif;
+            font-size: 28px;
+            color: #e52e71;
+            text-align: center;
+            background: linear-gradient(45deg, #ff8a00, #e52e71);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: bold;
+            flex: 1;
         }
 
         .header .logout {
-          background-color: #ff4444;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 14px;
-          margin-left: auto;
-          transition: background-color 0.3s;
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+            transition: background-color 0.3s;
         }
 
         .header .logout:hover {
-          background-color: #ff6666;
+            background-color: #ff6666;
         }
 
         .content {
-          flex-grow: 1;
-          display: flex;
-          flex-direction: column;
-          background-color: #fff;
-          border-radius: 10px;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-          padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #292929; /* Noch dunklerer Inhaltshintergrund */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
         }
 
         .content h1 {
-          font-size: 24px;
-          color: #444;
-          margin-bottom: 20px;
+            font-size: 24px;
+            color: #fff; /* Weißer Text für besseren Kontrast */
+            margin-bottom: 20px;
         }
 
-        form div {
-          margin-bottom: 15px;
+        /* Matrix für Links */
+        .link-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px; /* Vergrößerte Lücken zwischen den Bildern */
+            background-color: #3a3a3a; /* Dunklerer Hintergrund für die Matrix */
+            padding: 20px;
+            border-radius: 10px;
         }
 
-        label {
-          font-size: 16px;
-          color: #333;
-          display: block;
-          margin-bottom: 5px;
+        .link-matrix a {
+            text-decoration: none;
+            color: #fff; /* Weißer Text */
+            font-size: 20px;
+            text-align: center;
+            padding: 30px;
+            background-color: #444; /* Dunkler Hintergrund für die Buttons */
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        input[type="text"] {
-          width: 100%;
-          padding: 10px;
-          font-size: 16px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-          box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        .link-matrix a:hover {
+            background-color: #555; /* Dunkleres Hover */
+            color: #e52e71;
         }
 
-        button {
-          padding: 10px 20px;
-          font-size: 16px;
-          border: none;
-          background-color: #ff8a00;
-          color: white;
-          border-radius: 5px;
-          cursor: pointer;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          transition: background 0.3s;
+        .link-matrix a img {
+            width: 6rem;
+            height: 6rem;
+            margin-bottom: 15px;
+            display: block;
         }
 
-        button:hover {
-          background-color: #e52e71;
-        }
-
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-top: 20px;
-        }
-
-        table th, table td {
-          border: 1px solid #ccc;
-          padding: 10px;
-          text-align: left;
-        }
-
-        table th {
-          background-color: #f4f4f4;
-          font-size: 16px;
-          color: #333;
-        }
-
-        table td {
-          font-size: 14px;
-        }
-
-        .btn-primary {
-          background-color: #007bff;
-          color: #fff;
-          border-radius: 5px;
-          padding: 5px 10px;
-          text-decoration: none;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-          background-color: #0056b3;
-        }
-
-        .btn-danger {
-          background-color: #ff4444;
-          color: #fff;
-          border-radius: 5px;
-          padding: 5px 10px;
-          cursor: pointer;
-          transition: background-color 0.3s;
-        }
-
-        .btn-danger:hover {
-          background-color: #ff6666;
-        }
     </style>
 </head>
 <body>
@@ -221,11 +174,7 @@
     <div class="sidebar">
         <h3>Menü</h3>
         <a th:href="@{/admin/dashboard}">Dashboard</a>
-        <a th:href="@{/admin/usermanagement}">User-Verwaltung</a>
-        <a th:href="@{/admin/classmanagement}">Klassen-Verwaltung</a>
-        <a th:href="@{/admin/categorymanagement}">Themen-Verwaltung</a>
-        <a th:href="@{/admin/topicmanagement}">Vortrags-Verwaltung</a>
-        <a th:href="@{/admin/admin-Change-Password}">Konto Verwalten</a>
+        <a th:href="@{/admin/usermanagement}">Konto Verwalten</a>
         <div class="logo">
             <img alt="Logo" th:src="@{/images/logo2.png}">
         </div>
@@ -235,11 +184,8 @@
     <div class="main-content">
         <!-- Header -->
         <div class="header">
-            <div class="avatar">
-
-            </div>
+            <div class="avatar"></div>
             <h1>Hallo, <span th:text="${benutzername}">Admin</span>!</h1>
-
 
             <!-- "Learning Journal" in der Mitte -->
             <div class="center-title">
@@ -255,6 +201,18 @@
         <!-- Inhalt -->
         <div class="content">
             <h1>Monatliche Themen Auswahl</h1>
+
+            <!-- Matrix für Links -->
+            <div class="link-matrix">
+                <a th:href="@{/admin/usermanagement}">User-Verwaltung
+                    <img alt="user-Verwaltung" th:src="@{/images/user_verwaltung.jpg}"></a>
+                <a th:href="@{/admin/classmanagement}">Klassen-Verwaltung
+                    <img alt="klassen-Verwaltung" th:src="@{/images/klasse.png}"></a>
+                <a th:href="@{/admin/categorymanagement}">Themen-Verwaltung
+                    <img alt="themen-Verwaltung" th:src="@{/images/themen.png}"></a>
+                <a th:href="@{/admin/topicmanagement}">Vortrags-Verwaltung
+                    <img alt="vortrags-Verwaltung" th:src="@{/images/vorstellung.png}"></a>
+            </div>
         </div>
     </div>
 </div>
