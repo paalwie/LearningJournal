@@ -37,13 +37,4 @@ public class HomeController {
         return "login";  // login.html
     }
 
-    @Controller
-    @RequestMapping("/admin")
-    public class AdminController {
-        @GetMapping("/admin-Change-Password")
-        public String showChangePasswordPage() {
-            return "adminChangePassword";
-        }
-    }
-
 }
