@@ -21,6 +21,10 @@ public class Klassen {
         this.klassenid = klassenid;
     }
 
+    public Long getKlassenid() {
+        return klassenid;
+    }
+
     public void setKlassenname(String klassenname) {
         this.klassenname = klassenname;
     }

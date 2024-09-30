@@ -267,6 +267,11 @@
         </div>
 
         <div>
+          <label for="vortragsthema">Vortragsthema:</label>
+          <input type="text" id="vortragsthema" name="vortragsthema" th:value="${user.vortragsthema?.thema}">
+        </div>
+
+        <div>
           <label for="rolleid">Rolle:</label>
           <input type="number" id="rolleid" name="rolleid" th:value="${user.rolleid}" required>
         </div>

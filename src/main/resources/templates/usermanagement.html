@@ -216,8 +216,9 @@
                     <th><a th:href="@{/admin/usermanagement(sortBy='benutzerid')}">Benutzer ID</a></th>
                     <th><a th:href="@{/admin/usermanagement(sortBy='benutzername')}">Benutzername</a></th>
                     <th><a th:href="@{/admin/usermanagement(sortBy='rolleid')}">Rollen ID</a></th>
-                    <th><a th:href="@{/admin/usermanagement(sortBy='klassenid')}">Klassen ID</a></th>
+                    <th><a th:href="@{/admin/usermanagement(sortBy='klassen.klassenname')}">Klassen ID</a></th>
                     <!-- Weitere Spalten nach Bedarf -->
+                    <th>Vortragsthema</th>
                     <th>Passwort</th>
                     <th>Bearbeiten</th>
                     <th>Löschen</th>
@@ -228,7 +229,8 @@
                     <td th:text="${user.benutzerid}"></td>
                     <td th:text="${user.benutzername}"></td>
                     <td th:text="${user.rolleid}"></td>
-                    <td th:text="${user.klassenid}"></td>
+                    <td th:text="${user.klassen.klassenname}"></td>
+                    <td th:text="${user.vortragsthema != null ? user.vortragsthema.thema : 'Kein Thema zugewiesen'}"></td>
                     <td th:text="${user.passwort}"></td>
                     <td>
                         <form th:action="@{/admin/useredit/{id}(id=${user.benutzerid})}" method="get">
