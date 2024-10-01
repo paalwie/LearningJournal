@@ -58,6 +58,7 @@ public class UserController {
 
         // Den Benutzernamen in das Model hinzufügen, um ihn in Thymeleaf anzuzeigen
         model.addAttribute("benutzername", benutzer.getBenutzername());
+        model.addAttribute("klassenname", benutzer.getKlassen().getKlassenname());
 
         return "userHome";  // userHome.html anzeigen
     }
