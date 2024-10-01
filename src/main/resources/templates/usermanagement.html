@@ -5,6 +5,15 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Elegantes Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        function confirmDelete() {
+            let confirmation = confirm("Möchten Sie den Benutzer und alle seine Journal-Einträge wirklich löschen?");
+            if (confirmation) {
+                // Hier würde der Löschvorgang ausgelöst werden
+                window.location.href = "/benutzer-loeschen-url";
+            }
+        }
+    </script>
     <style>
         body {
             margin: 0;
@@ -239,7 +248,7 @@
                     </td>
                     <td>
                         <form th:action="@{/admin/userdelete/{id}(id=${user.benutzerid})}" method="post">
-                            <button type="submit" class="btn btn-danger">Löschen</button>
+                            <button onclick="confirmDelete()">Benutzer löschen</button>
                         </form>
                     </td>
                 </tr>
