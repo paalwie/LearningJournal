@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface JournalRepository extends JpaRepository<Journal, Long> {
     Page<Journal> findByBenutzerid(Long benutzerid, Pageable pageable);
+
+    // Einträge eines Benutzers filtern nach dem Titel
+    Page<Journal> findByBenutzeridAndTitelContainingIgnoreCase(Long benutzerId, String titel, Pageable pageable);
    // Page<Journal> findByBenutzerid(Long benutzerid, Pageable pageable);
 }

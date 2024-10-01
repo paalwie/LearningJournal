@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -42,7 +43,10 @@ public class JournalController {
 
     @GetMapping("/user/journal")
     public String getUserJournal(Model model, @RequestParam(defaultValue = "0") int page,  // Seite 0 als Standard
-                                 @RequestParam(defaultValue = "15") int size, // 15 Einträge pro Seite
+                                 @RequestParam(defaultValue = "15") int size,
+                                 @RequestParam(defaultValue = "titel") String sortBy,  // Standard Sortierung nach Titel
+                                 @RequestParam(defaultValue = "asc") String sortOrder,  // Standardmäßig aufsteigend
+                                 @RequestParam(required = false) String filter, // Filter-Parameter hinzufügen// 15 Einträge pro Seite
                                  Authentication authentication) {
 
         // Hole den Benutzernamen aus dem Authentication-Objekt
@@ -57,9 +61,20 @@ public class JournalController {
 
         Long userId = user.getBenutzerid();
 
-        // Paging anfordern
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Journal> userEntries = journalRepository.findByBenutzerid(userId, pageable);
+        // Sortierung erstellen
+        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Journal> userEntries;
+
+        // Wenn ein Filter vorhanden ist, nur die Einträge filtern
+        if (filter != null && !filter.isEmpty()) {
+            userEntries = journalRepository.findByBenutzeridAndTitelContainingIgnoreCase(userId, filter, pageable);
+        } else {
+            // Ansonsten alle Einträge des Benutzers abrufen
+            userEntries = journalRepository.findByBenutzerid(userId, pageable);
+        }
+
 
         model.addAttribute("entries", userEntries);
 
@@ -69,6 +84,8 @@ public class JournalController {
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("entries", userEntries);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("sortOrder", sortOrder);
 
         return "userJournal";
     }

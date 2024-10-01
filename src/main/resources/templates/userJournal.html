@@ -248,41 +248,69 @@
   <div class="content">
     <div class="left-column">
 
+      <!-- Filterbereich -->
+      <form th:action="@{/user/journal}" method="get">
+        <input type="text" name="filter" placeholder="Filter eingeben..." th:value="${filter}">
+        <button type="submit">Filtern</button>
+        <a href="/user/journal" class="button">Filter zurücksetzen</a>
+      </form>
+
       <!-- Button zum Hinzufügen eines neuen Eintrags -->
       <a href="/user/journal/create" class="button">
         Neuen Eintrag hinzufügen
       </a>
 
       <table>
-        <thead>
-        <tr>
-          <th>Titel</th>
-          <th>Erstellungsdatum</th>
-          <th>Erstellungszeit</th>
-          <th>Kategorie</th>
-          <th>Aktionen</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="entry : ${entries}">
-          <td th:text="${entry.titel}"></td>
-          <td th:text="${entry.erstellungsdatum}"></td>
-          <td th:text="${entry.erstellungszeit}"></td>
-          <td>
-            <div>
-              <strong th:text="${entry.kategorie.kategoriename}"></strong>
-              <p th:text="${entry.kategorie.kategoriebeschreibung}"></p>
-            </div>
-          </td>
-          <td>
-            <a class="button-read" th:href="@{/user/journal/{id}(id=${entry.eintragid})}">Lesen</a>
-            <a class="button-edit" th:href="@{/user/journal/edit/{id}(id=${entry.eintragid})}">Bearbeiten</a>
-            <form th:action="@{/user/journal/delete/{id}(id=${entry.eintragid})}" method="post" style="display:inline;">
-              <button class="button" type="submit" style="background: linear-gradient(45deg, #ff5f6d, #ffc371);">Löschen</button>
-            </form>
-          </td>
-        </tr>
-        </tbody>
+      <thead>
+      <tr>
+        <!-- Spaltenköpfe mit Sortierlinks -->
+        <th>
+          <a th:href="@{/user/journal(page=${currentPage}, size=${size}, sortBy='titel', sortOrder=${sortOrder == 'asc' ? 'desc' : 'asc'})}">
+            Titel
+            <span th:text="${sortBy == 'titel' ? (sortOrder == 'asc' ? '▲' : '▼') : ''}"></span>
+          </a>
+        </th>
+        <th>
+          <a th:href="@{/user/journal(page=${currentPage}, size=${size}, sortBy='erstellungsdatum', sortOrder=${sortOrder == 'asc' ? 'desc' : 'asc'})}">
+            Erstellungsdatum
+            <span th:text="${sortBy == 'erstellungsdatum' ? (sortOrder == 'asc' ? '▲' : '▼') : ''}"></span>
+          </a>
+        </th>
+        <th>
+          <a th:href="@{/user/journal(page=${currentPage}, size=${size}, sortBy='erstellungszeit', sortOrder=${sortOrder == 'asc' ? 'desc' : 'asc'})}">
+            Erstellungszeit
+            <span th:text="${sortBy == 'erstellungszeit' ? (sortOrder == 'asc' ? '▲' : '▼') : ''}"></span>
+          </a>
+        </th>
+        <th>
+          <a th:href="@{/user/journal(page=${currentPage}, size=${size}, sortBy='kategorie.kategoriename', sortOrder=${sortOrder == 'asc' ? 'desc' : 'asc'})}">
+            Kategorie
+            <span th:text="${sortBy == 'kategorie.kategoriename' ? (sortOrder == 'asc' ? '▲' : '▼') : ''}"></span>
+          </a>
+        </th>
+        <th>Aktionen</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="entry : ${entries}">
+        <td th:text="${entry.titel}"></td>
+        <td th:text="${entry.erstellungsdatum}"></td>
+        <td th:text="${entry.erstellungszeit}"></td>
+        <td>
+          <div>
+            <strong th:text="${entry.kategorie.kategoriename}"></strong>
+            <p th:text="${entry.kategorie.kategoriebeschreibung}"></p>
+          </div>
+        </td>
+        <td>
+          <a class="button-read" th:href="@{/user/journal/{id}(id=${entry.eintragid})}">Lesen</a>
+          <a class="button-edit" th:href="@{/user/journal/edit/{id}(id=${entry.eintragid})}">Bearbeiten</a>
+          <form th:action="@{/user/journal/delete/{id}(id=${entry.eintragid})}" method="post" style="display:inline;">
+            <button class="button" type="submit" style="background: linear-gradient(45deg, #ff5f6d, #ffc371);">Löschen</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
       </table>
 
       <div class="pagination" th:if="${entries.totalPages > 1}">
