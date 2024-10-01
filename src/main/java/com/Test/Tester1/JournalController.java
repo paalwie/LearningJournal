@@ -146,7 +146,8 @@ public class JournalController {
         journal.setInhalt(inhalt);
         journal.setBenutzerid(user.getBenutzerid()); // Setzt die Benutzer-ID des aktuellen Nutzers
         journal.setErstellungsdatum(LocalDate.now()); // Automatisches Datum
-        journal.setErstellungszeit(LocalTime.now());  // Automatische Uhrzeit
+        journal.setErstellungszeit(LocalTime.now().withNano(0));  // Automatische Uhrzeit ohne Millisekunden
+
 
         // Speichern des neuen Eintrags
         journalRepository.save(journal);
