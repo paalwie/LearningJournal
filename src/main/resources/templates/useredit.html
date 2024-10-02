@@ -268,17 +268,28 @@
 
         <div>
           <label for="vortragsthema">Vortragsthema:</label>
-          <input type="text" id="vortragsthema" name="vortragsthema" th:value="${user.vortragsthema?.thema}">
+          <select id="vortragsthema" name="vortragsthema">
+            <option value="" disabled selected>Wähle ein Vortragsthema</option>
+            <option th:each="thema : ${vortragsthemen}"
+                    th:value="${thema.vortragsthemaID}"
+                    th:text="${thema.thema}"
+                    th:selected="${thema.vortragsthemaID} == ${user.vortragsthema?.vortragsthemaID}"></option>
+          </select>
         </div>
-
         <div>
           <label for="rolleid">Rolle:</label>
           <input type="number" id="rolleid" name="rolleid" th:value="${user.rolleid}" required>
         </div>
 
         <div>
-          <label for="klassenid">Klasse:</label>
-          <input type="number" id="klassenid" name="klassenid" th:value="${user.klassenid}" required>
+          <label for="klassen">Klasse:</label>
+          <select id="klassen" name="klassen">
+            <option value="" disabled selected>Wähle eine Klasse</option>
+            <option th:each="klasse : ${klassen}"
+                    th:value="${klasse.klassenid}"
+                    th:text="${klasse.klassenname}"
+                    th:selected="${klasse.klassenid} == ${user.klassen?.klassenid}"></option>
+          </select>
         </div>
 
         <button type="submit">Benutzer updaten</button>

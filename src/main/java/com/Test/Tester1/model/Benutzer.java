@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -21,6 +23,10 @@ public class Benutzer {
 
     @Column(nullable = false)
     private int rolleid;
+
+
+    @OneToMany(mappedBy = "benutzerid", cascade = CascadeType.REMOVE)
+    private List<Journal> journals;
 
     // Beziehung zur Klasse 'Klassen' (Many-to-One)
     @ManyToOne(fetch = FetchType.LAZY)
