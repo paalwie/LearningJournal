@@ -2,8 +2,11 @@ package com.Test.Tester1;
 
 import com.Test.Tester1.model.Benutzer;
 import com.Test.Tester1.model.Klassen;
+import com.Test.Tester1.model.Vortragsthema;
 import com.Test.Tester1.repository.ClassRepository;
 import com.Test.Tester1.repository.UserRepository;
+import com.Test.Tester1.service.KlassenService;
+import com.Test.Tester1.service.VortragsthemaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Sort;
@@ -17,12 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-
-
-
-
-
-
 @RequestMapping("/admin")  // Prefix für alle Admin-spezifischen Endpunkte
 public class AdminUserController {
 
@@ -30,6 +27,10 @@ public class AdminUserController {
     private UserRepository userRepository;
     @Autowired
     private ClassRepository classRepository;
+    @Autowired
+    private VortragsthemaService vortragsthemaService;
+    @Autowired
+    private KlassenService klassenService;
 
     // Diese Methode wird aufgerufen, wenn du /admin/usermanagement aufrufst
     @GetMapping("/usermanagement")
@@ -98,6 +99,16 @@ public class AdminUserController {
         Benutzer user = userRepository.findById(benutzerid).orElseThrow(() -> new IllegalArgumentException("Ungültige Benutzer-ID:" + benutzerid));
         model.addAttribute("user", user);  // Benutzer-Daten werden an die View übergeben
 
+        // Hier werden die Vortragsthemen geladen
+        List<Vortragsthema> vortragsthemen = vortragsthemaService.getAllVortragsthemen();
+
+        // Klassen laden
+        List<Klassen> classes = classRepository.findAll();
+        model.addAttribute("klassen", classes);
+
+        // Die Vortragsthemen werden dem Modell hinzugefügt
+        model.addAttribute("vortragsthemen", vortragsthemen);
+
         // Benutzername des eingeloggten Benutzers hinzufügen
         model.addAttribute("benutzername", currentUser.getUsername());
 
@@ -111,8 +122,9 @@ public class AdminUserController {
 
         existingUser.setBenutzername(updatedUser.getBenutzername());
         existingUser.setRolleid(updatedUser.getRolleid());
-        existingUser.setKlassenid(updatedUser.getKlassenid());
+        existingUser.setKlassen(updatedUser.getKlassen());
         existingUser.setPasswort(updatedUser.getPasswort());
+        existingUser.setVortragsthema(updatedUser.getVortragsthema());
 
         // Füge hier weitere Felder hinzu, falls nötig
 
